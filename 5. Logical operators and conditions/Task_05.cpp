@@ -44,10 +44,10 @@ int main() {
         b = c;
         c = temp;
     }
-    if (a > c) {
+    if (a > b) {
         int temp = a;
-        a = c;
-        c = temp;
+        a = b;
+        b = temp;
     }
 
     if (m > n) {
@@ -60,10 +60,10 @@ int main() {
         n = k;
         k = temp;
     }
-    if (m > k) {
+    if (m > n) {
         int temp = m;
-        m = k;
-        k = temp;
+        m = n;
+        n = temp;
     }
 
     if (a < m && b < n && c < k || 
