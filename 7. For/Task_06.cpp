@@ -31,9 +31,22 @@ int main() {
     }
     std::cout << "Введите количество восклицательных знаков: ";
     std::cin >> exclamCnt;
-    while (exclamCnt < lenght) {
-        std::cout << "Восклицательных знаков не может быть больше, чем общая длина колонтитула! Введите корректное количество: ";
+    while (exclamCnt > lenght || exclamCnt < 0) {
+        std::cout << "Восклицательных знаков не может быть больше, чем общая длина колонтитула или меньше нуля! Введите корректное количество: ";
         std::cin >> exclamCnt;
+    }
+
+    for (int i = 0; i < lenght;) {
+        if (exclamCnt && i == (lenght - exclamCnt) / 2) {
+            for (int j = 0; j < exclamCnt; ++j) {
+                std::cout << '!';
+            }
+            i += exclamCnt;
+        }
+        else {
+            std::cout << '~';
+            ++i;
+        }
     }
     return 0;
 }
