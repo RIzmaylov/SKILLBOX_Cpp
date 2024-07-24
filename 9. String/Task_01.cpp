@@ -1,4 +1,5 @@
 #include <iostream>
+#include <regex>
 
 /*
 Поезд отправляется в AA часов BB минут и прибывает в пункт назначения в CC часов DD минут. 
@@ -48,6 +49,16 @@ bool checkTime(int& hour, int& minute, const std::string& timeString) {
     return true;
 }
 
+bool checkTimeByRegex(int& hour, int& minute, const std::string& timeString) {
+    static const std::regex r(R"(^([0-1]\d|2[0-3])(:[0-5]\d)$)");
+    if (std::regex_match(timeString, r)) {
+        hour = 10 * (timeString[0] - '0') + (timeString[1] - '0');
+        minute = 10 * (timeString[3] - '0') + (timeString[4] - '0');
+        return true;
+    }
+    return false;
+}
+
 int main() {
     std::string startTime, finishTime;
     std::cout << "Введите время отправления (HH:MM): ";
@@ -58,7 +69,7 @@ int main() {
     int startHours, startMinutes;
     int finishHours, finishMinutes;
     
-    if (checkTime(startHours, startMinutes, startTime) && checkTime(finishHours, finishMinutes, finishTime)) {
+    if (checkTimeByRegex(startHours, startMinutes, startTime) && checkTimeByRegex(finishHours, finishMinutes, finishTime)) {
         int tripDuration = (60 * finishHours + finishMinutes) - (60 * startHours + startMinutes);
         if (tripDuration < 0) {
             tripDuration += 1440;
