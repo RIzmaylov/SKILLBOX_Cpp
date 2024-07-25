@@ -1,4 +1,6 @@
 #include <iostream>
+#include <regex>
+#include <vector>
 
 /*
 Вы решили разработать программу-калькулятор, которая складывает числа сколько угодно большой длины. 
@@ -63,12 +65,36 @@ bool CheckNum(const std::string& numInString) {
     else return false;
 }
 
-int main() {
-    std::string numInString;
-    std::cout << "Введите число:\n";
-    std::cin >> numInString;
+bool CheckRegexNum(const std::string& numInString) {
+    static const std::regex r(R"(\-?(\d+)?(\.\d{0,})?)");
+    return std::regex_match(numInString, r);
+}
 
-    if (CheckNum(numInString)) std::cout << "Число корректно!";
-    else std::cout << "Число некорректно!";
+void Test(const std::string& req) {
+    std::cout << "Число " << req;
+    if (CheckRegexNum(req)) std::cout << " корректно!\n";
+    else std::cout << " некорректно!\n";
+}
+
+int main() {
+    // std::string numInString;
+    // std::cout << "Введите число:\n";
+    // std::cin >> numInString;
+
+    // if (CheckNum(numInString)) std::cout << "Число корректно!";
+    // else std::cout << "Число некорректно!";
+
+    std::vector<std::string> trueStrings {"0123", "00.000", ".15", "165.", 
+        "999999999999999999999999999999999.999999999999999999999", "-1.0", "-.35"};
+    std::vector<std::string> falseStrings {"1.2.3", "11e-3", "+25"};
+
+    std::cout << "Корректные числа:\n";
+    for(const auto& s : trueStrings) {
+        Test(s);
+    }
+    std::cout << "Некорректные числа:\n";
+    for(const auto& s : falseStrings) {
+        Test(s);
+    }
     return 0;
 }
