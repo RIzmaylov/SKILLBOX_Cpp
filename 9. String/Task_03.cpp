@@ -1,4 +1,5 @@
 #include <iostream>
+#include <regex>
 
 /*
 Напишите программу, которая считает количество слов в тексте, введённом пользователем. 
@@ -59,6 +60,12 @@ int main() {
             curWord = false;
         }
     }
-    std::cout << "Ответ: " << wordsCnt;
+    std::cout << "Ответ: " << wordsCnt << std::endl;
+
+    std::regex expression("([^\\s]+)"); 
+    std::sregex_token_iterator first(reqString.begin(), reqString.end(), expression); 
+    std::sregex_token_iterator last;
+ 
+    std::cout << "The count of words: " << distance(first,last) << std::endl;
     return 0;
 }
